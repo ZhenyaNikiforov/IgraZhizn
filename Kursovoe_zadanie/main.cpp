@@ -12,7 +12,7 @@ int main()
   if (!fileFirstGeneration.is_open()) //-- Если не открылся;
   {
     fileFirstGeneration.close(); //-- Закрываем;
-    cout << "ERROR! File in.txt is not definded!" << endl;
+    cout << "ERROR! File \"in.txt\" is not definded!" << endl;
     return 0; //-- Бросаем;
   }
 
@@ -29,45 +29,24 @@ int main()
     generation[i] = new char[columns];
   }
 
-  if (fileFirstGeneration.eof()) //-- Если файл кончился,
+  for (int i = 0; i < rows; i++)
   {
-    for (int i = 0; i < rows; i++)
+    for (int j = 0; j < columns; j++)
     {
-      for (int j = 0; j < columns; j++)
-      {
-        generation[i][j] = '-'; //-- То заполняем массив минусами;
-      }
-    }
-  }
-  else //-- Если файл не кончился, то:
-  {
-    int verticalPosition = 0;
-    int horizontalPosition = 0;
-    fileFirstGeneration >> verticalPosition;
-    fileFirstGeneration >> horizontalPosition; //-- Координаты первой *
-
-    for (int i = 0; i < rows; i++)
-    {
-      for (int j = 0; j < columns; j++)
-      {
-        if ((i == verticalPosition) && (j == horizontalPosition)) //-- Если равно,
-        {
-          generation[i][j] = '*';         //-- Ставим *
-          if (!fileFirstGeneration.eof()) //-- Если файл не кончился,
-          {
-            fileFirstGeneration >> verticalPosition; //-- то обновляем позиции;
-            fileFirstGeneration >> horizontalPosition;
-          }
-        }
-        else
-        {
-          generation[i][j] = '-'; //-Если координаты элемента не совпадают с позицией *
-        }
-      }
+      generation[i][j] = '-'; //-- Заполняем его минусами;
     }
   }
 
-  /*-- Делаем пустой динамический массив, будем его заполнять по правилам --*/
+  while (!fileFirstGeneration.eof()) //- Пока файл не кончится,
+  {
+    int i = 0;
+    int j = 0;
+    fileFirstGeneration >> i;
+    fileFirstGeneration >> j;
+    generation[i][j] = '*'; //-- Добавляем звёздочки из файла;
+  }
+
+  /*-- Делаем второй массив, будем его заполнять по правилам --*/
 
   char **secondGeneration = new char *[rows];
   for (int i = 0; i < rows; i++)
