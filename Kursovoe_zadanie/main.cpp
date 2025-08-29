@@ -23,10 +23,10 @@ int main()
   fileFirstGeneration >> rows;    //-- Ряды;
   fileFirstGeneration >> columns; //-- Колонки;
 
-  string **generation = new string *[rows]; //-- Делаем пустой массив;
+  char **generation = new char *[rows]; //-- Делаем пустой массив;
   for (int i = 0; i < rows; i++)
   {
-    generation[i] = new string[columns];
+    generation[i] = new char[columns];
   }
 
   if (fileFirstGeneration.eof()) //-- Если файл кончился,
@@ -35,7 +35,7 @@ int main()
     {
       for (int j = 0; j < columns; j++)
       {
-        generation[i][j] = "-"; //-- То заполняем массив минусами;
+        generation[i][j] = '-'; //-- То заполняем массив минусами;
       }
     }
   }
@@ -52,7 +52,7 @@ int main()
       {
         if ((i == verticalPosition) && (j == horizontalPosition)) //-- Если равно,
         {
-          generation[i][j] = "*";         //-- Ставим *
+          generation[i][j] = '*';         //-- Ставим *
           if (!fileFirstGeneration.eof()) //-- Если файл не кончился,
           {
             fileFirstGeneration >> verticalPosition; //-- то обновляем позиции;
@@ -61,7 +61,7 @@ int main()
         }
         else
         {
-          generation[i][j] = "-"; //-Если координаты элемента не совпадают с позицией *
+          generation[i][j] = '-'; //-Если координаты элемента не совпадают с позицией *
         }
       }
     }
@@ -69,10 +69,10 @@ int main()
 
   /*-- Делаем пустой динамический массив, будем его заполнять по правилам --*/
 
-  string **secondGeneration = new string *[rows];
+  char **secondGeneration = new char *[rows];
   for (int i = 0; i < rows; i++)
   {
-    secondGeneration[i] = new string[columns];
+    secondGeneration[i] = new char[columns];
   }
 
   /*-- Объявляем переменные.
@@ -87,7 +87,7 @@ int main()
   В цикле будем только менять их значения,
   а определим - здесь. --*/
 
-  string a = "", b = "", c = "", d = "", e = "", f = "", g = "", h = "";
+  char a = ' ', b = ' ', c = ' ', d = ' ', e = ' ', f = ' ', g = ' ', h = ' ';
   int cellsAround = 0;
   int generationNumber = 0;
   int aliveCells = 0;
@@ -102,7 +102,7 @@ int main()
     {
       for (int j = 0; j < columns; j++)
       {
-        a, b, c, d, e, f, g, h = "";
+        a, b, c, d, e, f, g, h = ' ';
         cellsAround = 0;
 
         int stepTop = i - 1;
@@ -115,40 +115,40 @@ int main()
         bool bottom = stepBottom < rows;
         bool right = stepRight < columns;
 
-        a = top ? generation[stepTop][j] : "";
-        b = (top && right) ? generation[stepTop][stepRight] : "";
-        c = right ? generation[i][stepRight] : "";
-        d = (bottom && right) ? generation[stepBottom][stepRight] : "";
-        e = bottom ? generation[stepBottom][j] : "";
-        f = (bottom && left) ? generation[stepBottom][stepLeft] : "";
-        g = left ? generation[i][stepLeft] : "";
-        h = (top && left) ? generation[stepTop][stepLeft] : "";
+        a = top ? generation[stepTop][j] : ' ';
+        b = (top && right) ? generation[stepTop][stepRight] : ' ';
+        c = right ? generation[i][stepRight] : ' ';
+        d = (bottom && right) ? generation[stepBottom][stepRight] : ' ';
+        e = bottom ? generation[stepBottom][j] : ' ';
+        f = (bottom && left) ? generation[stepBottom][stepLeft] : ' ';
+        g = left ? generation[i][stepLeft] : ' ';
+        h = (top && left) ? generation[stepTop][stepLeft] : ' ';
 
-        cellsAround = (a == "*") ? cellsAround + 1 : cellsAround;
-        cellsAround = (b == "*") ? cellsAround + 1 : cellsAround;
-        cellsAround = (c == "*") ? cellsAround + 1 : cellsAround;
-        cellsAround = (d == "*") ? cellsAround + 1 : cellsAround;
-        cellsAround = (e == "*") ? cellsAround + 1 : cellsAround;
-        cellsAround = (f == "*") ? cellsAround + 1 : cellsAround;
-        cellsAround = (g == "*") ? cellsAround + 1 : cellsAround;
-        cellsAround = (h == "*") ? cellsAround + 1 : cellsAround;
+        cellsAround = (a == '*') ? cellsAround + 1 : cellsAround;
+        cellsAround = (b == '*') ? cellsAround + 1 : cellsAround;
+        cellsAround = (c == '*') ? cellsAround + 1 : cellsAround;
+        cellsAround = (d == '*') ? cellsAround + 1 : cellsAround;
+        cellsAround = (e == '*') ? cellsAround + 1 : cellsAround;
+        cellsAround = (f == '*') ? cellsAround + 1 : cellsAround;
+        cellsAround = (g == '*') ? cellsAround + 1 : cellsAround;
+        cellsAround = (h == '*') ? cellsAround + 1 : cellsAround;
 
-        if (generation[i][j] == "*")
+        if (generation[i][j] == '*')
         {
           aliveCells++;
 
           if ((cellsAround == 0) || (cellsAround == 1))
           {
-            secondGeneration[i][j] = "-";
+            secondGeneration[i][j] = '-';
             difference = true;
           }
           else if ((cellsAround == 2) || (cellsAround == 3))
           {
-            secondGeneration[i][j] = "*";
+            secondGeneration[i][j] = '*';
           }
           else
           {
-            secondGeneration[i][j] = "-";
+            secondGeneration[i][j] = '-';
             difference = true;
           }
         }
@@ -156,12 +156,12 @@ int main()
         {
           if (cellsAround == 3)
           {
-            secondGeneration[i][j] = "*";
+            secondGeneration[i][j] = '*';
             difference = true;
           }
           else
           {
-            secondGeneration[i][j] = "-";
+            secondGeneration[i][j] = '-';
           }
         }
       }
@@ -173,7 +173,7 @@ int main()
     {
       for (int j = 0; j < columns; j++)
       {
-        cout << generation[i][j] << " "; //- Отрисовываем первый массив
+        cout << generation[i][j] << ' '; //- Отрисовываем первый массив
       }
       cout << endl;
     }
@@ -194,7 +194,7 @@ int main()
       {
         for (int j = 0; j < columns; j++)
         {
-          cout << secondGeneration[i][j] << " "; //- Рисуем второй массив
+          cout << secondGeneration[i][j] << ' '; //- Рисуем второй массив
         }
         cout << endl;
       }
