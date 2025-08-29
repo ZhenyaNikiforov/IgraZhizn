@@ -54,34 +54,22 @@ int main()
     secondGeneration[i] = new char[columns];
   }
 
-  /*-- Объявляем переменные.
-  В них заносим знаки, которые вокруг клетки:
-
-  h a b
-  g x c
-  f e d
-
-  x - это клетка.
-
-  В цикле будем только менять их значения,
-  а определим - здесь. --*/
-
-  char a = ' ', b = ' ', c = ' ', d = ' ', e = ' ', f = ' ', g = ' ', h = ' ';
-  int cellsAround = 0;
-  int generationNumber = 0;
-  int aliveCells = 0;
-  bool difference = false;
+  const int numberOfDirections = 8; //- 8 направлений вокруг клетки;
+  int cellsAround = 0;              //- Клеток рядом изначально нет;
+  int generationNumber = 0;         //- Номер поколения;
+  int aliveCells = 0;               //- Живых клеток изначально нет;
+  bool difference = false;          //- Отличий изначально нет;
 
   while (true)
   {
-    aliveCells = 0;
-    difference = false;
+    aliveCells = 0;     //- Сбрасываем живые клетки преред каждым пробегом по массиву
+    difference = false; //- Отличия тоже сбрасываем
 
     for (int i = 0; i < rows; i++)
     {
       for (int j = 0; j < columns; j++)
       {
-        a, b, c, d, e, f, g, h = ' ';
+        char directions[numberOfDirections] = {}; //- Массив напрвалений
         cellsAround = 0;
 
         int stepTop = i - 1;
@@ -94,23 +82,19 @@ int main()
         bool bottom = stepBottom < rows;
         bool right = stepRight < columns;
 
-        a = top ? generation[stepTop][j] : ' ';
-        b = (top && right) ? generation[stepTop][stepRight] : ' ';
-        c = right ? generation[i][stepRight] : ' ';
-        d = (bottom && right) ? generation[stepBottom][stepRight] : ' ';
-        e = bottom ? generation[stepBottom][j] : ' ';
-        f = (bottom && left) ? generation[stepBottom][stepLeft] : ' ';
-        g = left ? generation[i][stepLeft] : ' ';
-        h = (top && left) ? generation[stepTop][stepLeft] : ' ';
+        directions[0] = top ? generation[stepTop][j] : ' ';
+        directions[1] = (top && right) ? generation[stepTop][stepRight] : ' ';
+        directions[2] = right ? generation[i][stepRight] : ' ';
+        directions[3] = (bottom && right) ? generation[stepBottom][stepRight] : ' ';
+        directions[4] = bottom ? generation[stepBottom][j] : ' ';
+        directions[5] = (bottom && left) ? generation[stepBottom][stepLeft] : ' ';
+        directions[6] = left ? generation[i][stepLeft] : ' ';
+        directions[7] = (top && left) ? generation[stepTop][stepLeft] : ' ';
 
-        cellsAround = (a == '*') ? cellsAround + 1 : cellsAround;
-        cellsAround = (b == '*') ? cellsAround + 1 : cellsAround;
-        cellsAround = (c == '*') ? cellsAround + 1 : cellsAround;
-        cellsAround = (d == '*') ? cellsAround + 1 : cellsAround;
-        cellsAround = (e == '*') ? cellsAround + 1 : cellsAround;
-        cellsAround = (f == '*') ? cellsAround + 1 : cellsAround;
-        cellsAround = (g == '*') ? cellsAround + 1 : cellsAround;
-        cellsAround = (h == '*') ? cellsAround + 1 : cellsAround;
+        for (int i = 0; i < numberOfDirections; i++) //- Бежим по массиву напрвлений
+        {
+          cellsAround = (directions[i] == '*') ? cellsAround + 1 : cellsAround;
+        }
 
         if (generation[i][j] == '*')
         {
