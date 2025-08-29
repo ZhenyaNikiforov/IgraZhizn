@@ -87,7 +87,7 @@ int main()
   В цикле будем только менять их значения,
   а определим - здесь. --*/
 
-  string a, b, c, d, e, f, g, h = "";
+  string a = "", b = "", c = "", d = "", e = "", f = "", g = "", h = "";
   int cellsAround = 0;
   int generationNumber = 0;
   int aliveCells = 0;
