@@ -37,13 +37,13 @@ int main()
     }
   }
 
-  while (!fileFirstGeneration.eof()) //- Пока файл не кончится,
+  int i = 0, j = 0;
+  while (fileFirstGeneration >> i >> j) //- Пока файл не кончится,
   {
-    int i = 0;
-    int j = 0;
-    fileFirstGeneration >> i;
-    fileFirstGeneration >> j;
-    generation[i][j] = '*'; //-- Добавляем звёздочки из файла;
+    if (i >= 0 && i < rows && j >= 0 && j < columns) //- Проверка переполнения
+    {
+      generation[i][j] = '*'; //-- Добавляем звёздочки из файла;
+    }
   }
 
   /*-- Делаем второй массив, будем его заполнять по правилам --*/
